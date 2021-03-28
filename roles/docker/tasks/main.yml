@@ -25,7 +25,7 @@
   pip:
     name: docker-py
 
-- name: Create {{ docker_home }} directory
+- name: Create /docker directory
   file:
-    path: "{{ docker_home }}"
+    path: "/docker"
     state: directory
