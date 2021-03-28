@@ -1,0 +1,31 @@
+---
+- name: Install aptitude using apt
+  apt: name=aptitude state=latest update_cache=yes force_apt_get=yes
+
+- name: Install required system packages
+  apt:
+    name: ['apt-transport-https', 'ca-certificates', 'curl', 'software-properties-common', 'python3-pip', 'python3-setuptools']
+    update_cache: yes
+
+- name:  Add Docker repository key
+  shell: "curl -fsSL https://download.docker.com/linux/ubuntu/gpg | sudo apt-key add -"
+  args:
+    warn: no
+
+- name: Set up the stable repository
+  apt_repository:
+    repo: deb [arch=amd64] https://download.docker.com/linux/ubuntu {{ ansible_distribution_release }} stable
+
+- name: Install Docker CE
+  apt:
+    name: docker-ce
+    update_cache: yes
+
+- name: Install docker-py
+  pip:
+    name: docker-py
+
+- name: Create {{ docker_home }} directory
+  file:
+    path: "{{ docker_home }}"
+    state: directory
