@@ -4,9 +4,11 @@
 
 - name: Build {{ docker_jenkins_image }} image
   docker_image:
-    path: "{{ docker_jenkins_home }}"
-    name: "{{ docker_jenkins_image }}"
+    build:
+      path: "{{ docker_jenkins_home }}"
     state: present
+    name: "{{ docker_jenkins_image }}"
+    source: build
 
 - name: Create {{ docker_jenkins_container }} container
   docker_container:
@@ -25,5 +27,5 @@
     url: "{{ jenkins_url }}"
   register: jenkins_url_result
   until: jenkins_url_result.status == 200
-  retries: 5
+  retries: 15
   delay: 10

@@ -4,7 +4,7 @@
 
 - name: Install required system packages
   apt:
-    name: ['apt-transport-https', 'ca-certificates', 'curl', 'software-properties-common', 'python3-pip', 'python3-setuptools']
+    name: ['apt-transport-https', 'ca-certificates', 'curl', 'software-properties-common', 'python-pip', 'python-setuptools']
     update_cache: yes
 
 - name:  Add Docker repository key
@@ -16,14 +16,14 @@
   apt_repository:
     repo: deb [arch=amd64] https://download.docker.com/linux/ubuntu {{ ansible_distribution_release }} stable
 
-- name: Install Docker CE
+- name: Install docker-ce 
   apt:
-    name: docker-ce
+    name: docker-ce 
     update_cache: yes
 
 - name: Install docker-py
   pip:
-    name: docker-py
+    name: docker
 
 - name: Create /docker directory
   file:
